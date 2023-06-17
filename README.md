@@ -1,4 +1,4 @@
-# 1. Renovación De Certificados
+# 1. Renovación De Certificados Kubernetes version 1.15.3
 Estos pasos se realizan en todos los Master del cluster
 
 * Generamos copias de seguridad de manifests
