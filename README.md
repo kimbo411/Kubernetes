@@ -3,30 +3,30 @@ Estos pasos se realizan en todos los Master del cluster
 
 * Generamos copias de seguridad de manifests
 ```bash
-mkdir /etc/kubernetes/old
-cp /etc/kubernetes/manifests/*.* /etc/kubernetes/old/
+mkdir /etc/kubernetes/old2
+cp /etc/kubernetes/manifests/*.* /etc/kubernetes/old2/
 ```
 * Eliminamos los pods estaticos de kubernetes
 ```bash
 rm -f /etc/kubernetes/manifests/*.*
 ```
 
-* Generamos copias de seguridad de los certificados en la ruta $HOME/k8s-old-certs/pki
+* Generamos copias de seguridad de los certificados en la ruta /etc/kubernetes/k8s-old-certs2/pki
 
 ```bash
-mkdir -p $HOME/k8s-old-certs/pki
-/bin/cp -p /etc/kubernetes/pki/*.* $HOME/k8s-old-certs/pki
-ls -l $HOME/k8s-old-certs/pki/
+mkdir -p /etc/kubernetes/k8s-old-certs2/pki
+/bin/cp -p /etc/kubernetes/pki/*.* /etc/kubernetes/k8s-old-certs2/pki
+ls -l /etc/kubernetes/k8s-old-certs2/pki/
 ```
 
 * Eliminamos los certificados
 ```bash
-/bin/rm /etc/kubernetes/pki/apiserver.key
-/bin/rm /etc/kubernetes/pki/apiserver.crt
-/bin/rm /etc/kubernetes/pki/apiserver-kubelet-client.crt
-/bin/rm /etc/kubernetes/pki/apiserver-kubelet-client.key
-/bin/rm /etc/kubernetes/pki/front-proxy-client.crt
-/bin/rm /etc/kubernetes/pki/front-proxy-client.key
+/bin/rm -f /etc/kubernetes/pki/apiserver.key
+/bin/rm -f /etc/kubernetes/pki/apiserver.crt
+/bin/rm -f /etc/kubernetes/pki/apiserver-kubelet-client.crt
+/bin/rm -f /etc/kubernetes/pki/apiserver-kubelet-client.key
+/bin/rm -f /etc/kubernetes/pki/front-proxy-client.crt
+/bin/rm -f /etc/kubernetes/pki/front-proxy-client.key
 ```
 
 * Regeneramos los certificados del controll-plane
@@ -34,18 +34,12 @@ ls -l $HOME/k8s-old-certs/pki/
 kubeadm init phase certs all --config /etc/kubernetes/kubeadm-config.yaml
 ```
 
-* Generamos copias de seguridad de los archivos de configuración
-```bash
-/bin/cp -p /etc/kubernetes/*.conf $HOME/k8s-old-certs
-ls -ltr $HOME/k8s-old-certs
-```
-
 * Eliminamos archivos de configuración
 ```bash
-/bin/rm /etc/kubernetes/admin.conf
-/bin/rm /etc/kubernetes/kubelet.conf
-/bin/rm /etc/kubernetes/controller-manager.conf
-/bin/rm /etc/kubernetes/scheduler.conf 
+/bin/rm -f /etc/kubernetes/admin.conf
+/bin/rm -f /etc/kubernetes/kubelet.conf
+/bin/rm -f /etc/kubernetes/controller-manager.conf
+/bin/rm -f /etc/kubernetes/scheduler.conf 
 ```
 
 * Regeneramos los archivos de configuración
@@ -56,7 +50,7 @@ kubeadm init phase kubeconfig all --config /etc/kubernetes/kubeadm-config.yaml
 
 * Colocamos los archivos manifest (pods estaticos) en su lugar
 ```bash
-cp /etc/kubernetes/old/*.* /etc/kubernetes/manifests/
+cp /etc/kubernetes/old2/*.* /etc/kubernetes/manifests/
 ```
 
 * Verificamos que los pods estáticos se inicien
